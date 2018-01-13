@@ -1,0 +1,17 @@
+<h1 class="current-category"><%= params[:category] %></h1>
+
+<% if @plays.count == 0 %>
+  <h3>このジャンルの映画はありません</h3>
+<% else %>
+  <div class="row">
+    <% @plays.each do |play| %>
+      <div class="col-md-3">
+        <a href="/plays/ <%= play.id %>">
+          <div class="image-index"><td><%= image_tag play.image.to_s %></td></div>
+        </a>
+      </div>
+    <% end -%>
+
+  </div>
+<% end -%>
+<%= paginate(@plays) %>

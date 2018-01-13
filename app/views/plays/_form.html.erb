@@ -1,0 +1,22 @@
+<% if @play.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <ul>
+      <% @play.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= simple_form_for @play do |f| %>
+<div class="form-group">
+  <%= f.file_field :image %>
+  <%= f.hidden_field :image_cache %>
+<br>
+</div>  
+  <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :name), include_blank: "ジャンル選択") %>
+  <%= f.input :title, label: "映画タイトル" %>
+  <%= f.input :description, label: "映画あらすじ" %>
+  <%= f.input :director, label: "映画監督" %>
+  <%= f.submit "投稿する" %>
+<% end %>

@@ -1,0 +1,15 @@
+<div class="bookmark-index">
+  <% if @bookmarks.count == 0 %>
+    <h3>お気に入り映画がありません</h3>
+  <% else %>
+    <h3>お気に入りの映画</h3>
+    <% @bookmarks.each do |bookmark| %>
+      <% play = Play.find(bookmark.play_id) %>
+       <div class="col-md-3">
+          <a href="/plays/ <%= play.id %>">
+            <div class="image-index"><td><%= image_tag play.image.to_s %></td></div>
+          </a>
+       </div>
+    <% end -%>
+  <% end %>
+</div>

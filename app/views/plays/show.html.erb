@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-4">
+    <td><%= image_tag @play.image.thumb.to_s %></td>
+  </div>
+
+  <div class="col-md-8">
+    <div class="play-info">
+      <% if user_signed_in? %>
+       <p>
+          <%= link_to play_bookmarks_toggle_path(@play) , id: 'bookmark-link', data: { no_turbolink: true }, remote: true do %>
+              <%=raw bookmark_icon(@play, current_user) %>
+              お気に入り
+          <% end %>
+        </p>
+      <% end -%>
+
+
+      <h2 class="playy-title"><%= @play.title %></h2>
+      <h3 class="play-director"><span>  監督: </span><%= @play.director %>  </h3>
+      <h4 class="play-category">ジャンル：  <%= @play.category.name %></h4>
+      <h4 class="avg-rating">平均レビュー</h4>
+      <div class="average-review-rating" data-score=<%= @average_review %>></div>
+      <span class="number-of-reviews"><em> 合計 </em><%= @play.reviews.count %> レビュー </span>
+      <p class="play-descs"><%= @play.description %></p>
+    </div>
+  </div>
+
+  <div>
+
+    
+
+      </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="reviews">
+      <h1> レビュー </h1>
+        <%= render @play.reviews %>
+        <div>
+          <%= link_to "レビューを登録する", new_play_review_path(@play), class: "btn-custom" %>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="links-fix">
+  <div class="links btn-group">
+    <% if user_signed_in? %>
+      <% if @play.user_id == current_user.id %>
+        <%= link_to "映画編集", edit_play_path(@play), class: "btn btn-custom" %>
+        <%= link_to "映画削除", play_path(@play), method: :delete, data: { confirm: "本当に削除していいですか?" }, class: "btn btn-custom" %>
+      <% end -%>
+    <% end -%>
+  </div>
+</div>
+
+<script>
+  $('.review-rating').raty({
+    readOnly: true,
+    score: function() {
+      return $(this).attr('data-score');
+    },
+    path: '/assets/'
+  });
+</script>
+
+
+<script>
+  $('.average-review-rating').raty({
+    readOnly: true,
+    path: '/assets/',
+    score: function() {
+      return $(this).attr('data-score')
+    }
+  });
+</script>
