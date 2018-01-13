@@ -2,7 +2,7 @@
   <% if @bookmarks.count == 0 %>
     <h3>お気に入り映画がありません</h3>
   <% else %>
-    <h3>お気に入りの映画</h3>
+    <h3>お気に入り映画</h3>
     <% @bookmarks.each do |bookmark| %>
       <% play = Play.find(bookmark.play_id) %>
        <div class="col-md-3">
