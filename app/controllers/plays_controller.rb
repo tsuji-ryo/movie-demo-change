@@ -10,7 +10,7 @@ class PlaysController < ApplicationController
       @plays = Play.where(:category_id => @category_id).order("created_at DESC").page(params[:page]).per(8)
     end
   end
-  
+
   def show
     if @play.reviews.blank?
       @average_review = 0
@@ -41,7 +41,7 @@ class PlaysController < ApplicationController
 
   def update
     @play.category_id = params[:category_id]
-    
+
     if @play.update(play_params)
       redirect_to play_path(@play)
     else
