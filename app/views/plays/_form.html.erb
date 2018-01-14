@@ -8,13 +8,25 @@
   </div>
 <% end %>
 
-<%= simple_form_for @play do |f| %>
-<div class="form-group">
-  <%= f.file_field :image %>
-  <%= f.hidden_field :image_cache %>
-<br>
-</div>  
-  <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :name), include_blank: "ジャンル選択") %>
+<%= simple_form_for @play, html: {multipart: true} do |f| %>
+  <div class="form-group">
+    <%if @play.image? %>
+      画像は登録されました
+      <%= f.hidden_field :image_cache %>
+    <% else %>
+      <%= f.file_field :image %>
+      <%= f.hidden_field :image_cache %>
+    <% end -%>
+  <br>
+  </div>
+
+  <% if @play.category_id? %>
+    ジャンルは登録されました
+    <%= hidden_field_tag :category_id, @play.category_id %>
+  <% else %>
+    <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :name), include_blank: "ジャンル選択") %>
+
+  <% end -%>
   <%= f.input :title, label: "映画タイトル" %>
   <%= f.input :description, label: "映画あらすじ" %>
   <%= f.input :director, label: "映画監督" %>

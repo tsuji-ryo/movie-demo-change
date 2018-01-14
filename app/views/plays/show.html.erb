@@ -9,7 +9,11 @@
        <p>
           <%= link_to play_bookmarks_toggle_path(@play) , id: 'bookmark-link', data: { no_turbolink: true }, remote: true do %>
               <%=raw bookmark_icon(@play, current_user) %>
-              お気に入り
+              <% if @play.bookmarks.exists? %>
+                お気に入り済み
+               <% else %>
+                お気に入りしますか？
+              <% end -%>
           <% end %>
         </p>
       <% end -%>
