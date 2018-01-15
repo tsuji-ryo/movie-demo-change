@@ -11,13 +11,34 @@ class PlaysController < ApplicationController
     end
   end
 
+  # def show
+  #   if @play.reviews.blank?
+  #     @average_review = 0
+  #   else
+  #     @average_review = @play.reviews.average(:rating).round(2)
+  #   end
+  # end
+
   def show
-    if @play.reviews.blank?
+    @reviews = @play.reviews.order("created_at DESC")
+    unless @reviews.present?
       @average_review = 0
     else
-      @average_review = @play.reviews.average(:rating).round(2)
+      @average_review = @reviews.average(:rating).present? ? @reviews.average(:rating).round(2) : 0
     end
   end
+
+
+ #Example
+  # def show
+  #   @reviews =  @movie.reviews.order("created_at DESC")
+  #   unless @reviews.present?
+  #    @avg_review = 0
+  #   else
+  #    @avg_review = @reviews.average(:rating).present? ? @reviews.average(:rating).round(2) : 0
+  #   end
+  # end
+
 
   def new
     @play = current_user.plays.build
