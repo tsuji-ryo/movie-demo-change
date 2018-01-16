@@ -21,6 +21,9 @@ class PictureUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
+  def filename
+    super.chomp(File.extname(super)) + '.jpg' if original_filename.present?
+  end
   # Choose what kind of storage to use for this uploader:
   # storage :file
   storage :fog
