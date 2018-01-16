@@ -20,6 +20,8 @@ class PlaysController < ApplicationController
   # end
 
   def show
+    @bookmarks = @play.bookmarks.all if @play.bookmarks.exists
+    @bookmark = Bookmark.where(user_id: current_user, play_id: @play.id)
     @reviews = @play.reviews.order("created_at DESC")
     unless @reviews.present?
       @average_review = 0
